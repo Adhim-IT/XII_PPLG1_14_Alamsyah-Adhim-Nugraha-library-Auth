@@ -1,11 +1,16 @@
 const express = require('express');
+const authRoutes = require('./routes/authRoutes');
+const bookRoutes = require('./routes/books');
+
 const app = express();
-require('dotenv').config();
+const PORT = 3000;
 
 app.use(express.json());
+require('dotenv').config();
 
-const authRoutes = require('./routes/authRoutes');
+
 app.use('/auth', authRoutes); 
+app.use('/books', bookRoutes);
 
-const PORT = 3000;
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
