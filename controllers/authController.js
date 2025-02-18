@@ -4,14 +4,17 @@ const jwt = require('jsonwebtoken'); // Import jsonwebtoken untuk membuat token 
 
 // Handler untuk registrasi pengguna baru
 exports.register = async (req, res) => {
-  const { username, password, email } = req.body; // Mengambil data dari request body
+  console.log("Request Body:", req.body);
+  const { username, password, email, name, phone } = req.body; // Mengambil data dari request body
+
+
   
   try {
     // Hash password sebelum menyimpan ke database
     const hashedPassword = await bcrypt.hash(password, 10);
     
     // Membuat user baru di database
-    const user = await User.create({ username, password: hashedPassword, email });
+    const user = await User.create({ username, password: hashedPassword,  email,  name,  phone });
     
     // Mengembalikan respons sukses dengan data user yang baru dibuat
     res.json({ message: "User registered successfully", user });
@@ -20,6 +23,7 @@ exports.register = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Handler untuk login pengguna
 exports.login = async (req, res) => {
